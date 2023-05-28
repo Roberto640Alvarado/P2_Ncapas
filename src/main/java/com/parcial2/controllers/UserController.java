@@ -1,6 +1,7 @@
 package com.parcial2.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,17 +49,17 @@ public class UserController {
 	    
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<?> userById(@PathVariable(name = "id") String code){
-		User user = userService.findOneById(code);
-		
-		if(user == null) {
-			return new ResponseEntity<>(
-					new MessageDTO("user not found"), HttpStatus.NOT_FOUND);
-		}
-		
-		return new ResponseEntity<>(user, HttpStatus.OK);
-		
-	}
+public ResponseEntity<?> getUserById(@PathVariable(name = "id") UUID id) {
+    User user = userService.findOneById(id);
+
+    if (user == null) {
+        return new ResponseEntity<>(
+                new MessageDTO("User not found"),
+                HttpStatus.NOT_FOUND);
+    }
+
+    return new ResponseEntity<>(user, HttpStatus.OK);
+}
 	
 	@GetMapping("/users")
 	public ResponseEntity<?> findAllUsers(){

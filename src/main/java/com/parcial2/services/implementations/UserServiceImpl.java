@@ -38,16 +38,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findOneById(String id) {
-		try {
-			UUID code = UUID.fromString(id);
-			return userRepository.findById(code)
-					.orElse(null);
-			
-		} catch (Exception e) {
-			return null;
-		}
-	}
+public User findOneById(UUID id) {
+    try {
+        return userRepository.findById(id)
+                .orElse(null);
+    } catch (Exception e) {
+        return null;
+    }
+}
+
 
 	@Override
 	public List<User> findAll() {
