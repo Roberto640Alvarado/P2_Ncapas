@@ -1,6 +1,5 @@
 package com.parcial2.models.entities;
 
-import java.util.Date;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -18,31 +17,30 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "songPlaylist")
-
-public class SongPlaylist {
+@Table(name = "playlist")
+public class Playlist {
 	@Id
 	@Column(name = "code")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID code;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "song_code", nullable = true)
-	private Song songCode;
+	@Column(name = "title")
+	private String title;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "playList_code", nullable = true)
-	private Playlist playListCode;
+	@Column(name = "description")
+	private String description;
 	
-	@Column(name = "date_added")
-	private Date dateAdded;
 	
+	//@ManyToOne(fetch = FetchType.EAGER)
+	//@JoinColumn(name = "user_code", nullable = true)
+	//private User user_code;
 
-	public SongPlaylist(Song songCode, Playlist playListCode, Date dateAdded) {
+	public Playlist(String title, String description, User user_code) {
 		super();
-		this.songCode = songCode;
-		this.playListCode = playListCode;
-		this.dateAdded = dateAdded;
+		this.title = title;
+		this.description = description;
+		//this.user_code = user_code;
+		
 	}
 
 }

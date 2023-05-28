@@ -36,9 +36,9 @@ public class User {
 	@Column(name = "password")
 	private String password;
 	
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<User> users;
+	//@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	//@JsonIgnore
+	//private List<User> users;
 
 	public User(String username, String email, String password) {
 		super();
