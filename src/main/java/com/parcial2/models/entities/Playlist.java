@@ -19,28 +19,25 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "playlist")
 public class Playlist {
-	@Id
-	@Column(name = "code")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID code;
-	
-	@Column(name = "title")
-	private String title;
-	
-	@Column(name = "description")
-	private String description;
-	
-	
-	//@ManyToOne(fetch = FetchType.EAGER)
-	//@JoinColumn(name = "user_code", nullable = true)
-	//private User user_code;
+    @Id
+    @Column(name = "code")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID code;
 
-	public Playlist(String title, String description, User user_code) {
-		super();
-		this.title = title;
-		this.description = description;
-		//this.user_code = user_code;
-		
-	}
+    @Column(name = "title")
+    private String title;
 
+    @Column(name = "description", nullable = true) // Permitir valores nulos
+    private String description;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_code", nullable = true)
+    private User user_code;
+
+    public Playlist(String title, String description, User user_code) {
+        super();
+        this.title = title;
+        this.description = description;
+        this.user_code = user_code;
+    }
 }
