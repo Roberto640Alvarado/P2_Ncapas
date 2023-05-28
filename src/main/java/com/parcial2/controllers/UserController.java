@@ -1,16 +1,22 @@
 package com.parcial2.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.parcial2.utils.RequestErrorHandler;
 import com.parcial2.models.dtos.MessageDTO;
+import com.parcial2.models.entities.User;
 import com.parcial2.models.dtos.SaveDTO;
 import com.parcial2.services.UserService;
 
@@ -40,6 +46,24 @@ public class UserController {
 					new MessageDTO("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	    
+	}
+	@GetMapping("/{id}")
+	public ResponseEntity<?> userById(@PathVariable(name = "id") String code){
+		User user = userService.findOneById(code);
+		
+		if(user == null) {
+			return new ResponseEntity<>(
+					new MessageDTO("user not found"), HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(user, HttpStatus.OK);
+		
+	}
+	
+	@GetMapping("/users")
+	public ResponseEntity<?> findAllUsers(){
+		List<User> users = userService.findAll();
+		return new ResponseEntity<>(users,HttpStatus.OK);
 	}
 	
 

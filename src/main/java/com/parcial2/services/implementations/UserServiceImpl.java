@@ -1,6 +1,7 @@
 package com.parcial2.services.implementations;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,14 +39,19 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findOneById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			UUID code = UUID.fromString(id);
+			return userRepository.findById(code)
+					.orElse(null);
+			
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<User> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.findAll();
 	}
 
 }
