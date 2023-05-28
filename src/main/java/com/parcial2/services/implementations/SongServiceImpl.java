@@ -3,6 +3,7 @@ package com.parcial2.services.implementations;
 import java.time.Duration;
 import java.util.List;
 
+import org.postgresql.util.PGInterval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class SongServiceImpl implements SongService {
 	
 	@Override
 	@Transactional(rollbackOn = Exception.class)
-	public void save(String title, Duration duration) throws Exception {
+	public void save(String title, String duration) throws Exception {
 		Song newSong = new Song(
 				title,
 				duration
@@ -45,7 +46,7 @@ public class SongServiceImpl implements SongService {
 	@Override
 	public List<Song> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return songRepository.findAll();
 	}
 	
 }
