@@ -1,7 +1,5 @@
 package com.parcial2.models.dtos;
 
-import java.util.UUID;
-
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
