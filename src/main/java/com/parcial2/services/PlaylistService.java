@@ -8,7 +8,8 @@ import com.parcial2.models.entities.Playlist;
 
 public interface PlaylistService {
     void save(SavePlaylistDTO dto) throws Exception;
-    void deleteById(UUID id) throws Exception;
+    void deleteById(String id) throws Exception;
     Playlist findOneById(UUID id);
     List<Playlist> findAll();
+	
 }

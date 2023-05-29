@@ -13,6 +13,8 @@ import com.parcial2.repositories.PlaylistRepository;
 import com.parcial2.services.PlaylistService;
 import com.parcial2.services.UserService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class PlaylistServiceImpl implements PlaylistService {
 
@@ -40,9 +42,20 @@ public class PlaylistServiceImpl implements PlaylistService {
 
 
     @Override
-    public void deleteById(UUID id) {
-        playlistRepository.deleteById(id);
-    }
+	@Transactional(rollbackOn = Exception.class)
+	public void deleteById(String id) throws Exception {
+	    try {
+	        UUID playlistId = UUID.fromString(id);
+	        playlistRepository.deleteById(playlistId);
+	    } catch (IllegalArgumentException e) {
+	        // Si el ID no es válido
+	        throw new Exception("Invalid song ID");
+	    } catch (Exception e) {
+	        // Manejar otras excepciones
+	        throw new Exception("Failed to delete user");
+	    }
+	}
+
 
     @Override
     public Playlist findOneById(UUID id) {
