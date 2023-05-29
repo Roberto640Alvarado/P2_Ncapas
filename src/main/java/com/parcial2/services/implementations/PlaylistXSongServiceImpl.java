@@ -16,8 +16,12 @@ import com.parcial2.services.PlaylistService;
 import com.parcial2.services.PlaylistXSongService;
 import com.parcial2.services.SongService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class PlaylistXSongServiceImpl implements PlaylistXSongService {
+
+	
 
 	@Autowired
 	private PlaylistXSongRepository playlistXSongRepository;
@@ -29,6 +33,7 @@ public class PlaylistXSongServiceImpl implements PlaylistXSongService {
 	private PlaylistService playlistService;
 	
 	@Override
+	@Transactional(rollbackOn = Exception.class)
 	public void save(Timestamp date_added, UUID playlist_code, UUID song_code) throws Exception {
 		// TODO Auto-generated method stub
 		PlaylistXSong playlistSong = new PlaylistXSong();
@@ -57,6 +62,17 @@ public class PlaylistXSongServiceImpl implements PlaylistXSongService {
 	public PlaylistXSong findOneById(UUID id) {
 		// TODO Auto-generated method stub
 		return playlistXSongRepository.findById(id).orElse(null);
+	}
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public void delete(String insertion_code) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			UUID insertionId = UUID.fromString(insertion_code);
+			playlistXSongRepository.deleteById(insertionId);
+		} catch (IllegalArgumentException e) {
+			throw new Exception("Elimination faild");
+		}
 	}
 
 	

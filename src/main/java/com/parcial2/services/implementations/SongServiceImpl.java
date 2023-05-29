@@ -64,6 +64,7 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Override
+	@Transactional(rollbackOn = Exception.class)
 	public void update(UUID id, SaveSongDTO updatedSong) throws Exception {
 		// TODO Auto-generated method stub
 		Song song = findOneById(id);

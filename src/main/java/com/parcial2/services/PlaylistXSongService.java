@@ -11,4 +11,5 @@ public interface PlaylistXSongService {
 	void save(Timestamp date_added, UUID playlist_code, UUID song_code) throws Exception;
 	List<PlaylistXSong> findAll();
 	PlaylistXSong findOneById(UUID id);
+	void delete(String insertion_code) throws Exception;
 }
