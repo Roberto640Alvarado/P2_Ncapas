@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.parcial2.utils.RequestErrorHandler;
+import com.parcial2.models.dtos.LoginDTO;
 import com.parcial2.models.dtos.MessageDTO;
 import com.parcial2.models.entities.User;
 import com.parcial2.models.dtos.SaveDTO;
@@ -82,6 +83,23 @@ public ResponseEntity<?> getUserById(@PathVariable(name = "id") UUID id) {
 		List<User> users = userService.findAll();
 		return new ResponseEntity<>(users,HttpStatus.OK);
 	}
+
+	@PostMapping("/login")
+	public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
+		String username = loginDTO.getUsername();
+		String email = loginDTO.getEmail();
+		String password = loginDTO.getPassword();
+
+		User user = userService.findByUsernameOrEmailAndPassword(username, email, password);
+
+		if (user == null) {
+			return new ResponseEntity<>(new MessageDTO("Invalid credentials"), HttpStatus.UNAUTHORIZED);
+		}
+
+		// Aquí puedes generar un token de autenticación y devolverlo en la respuesta, o simplemente devolver un mensaje de éxito.
+		return new ResponseEntity<>(new MessageDTO("Login successful"), HttpStatus.OK);
+	}
+
 	
 
 }

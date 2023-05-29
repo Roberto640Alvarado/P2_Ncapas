@@ -11,4 +11,6 @@ public interface UserService {
     void deleteById(String id) throws Exception;
     User findOneById(UUID id);
     List<User> findAll();
+    User findByUsernameOrEmailAndPassword(String username, String email, String password);
+
 }

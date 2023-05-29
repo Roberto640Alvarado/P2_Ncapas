@@ -8,7 +8,9 @@ import com.parcial2.models.dtos.SaveDTO;
 import com.parcial2.models.entities.User;
 
 public interface UserRepository extends ListCrudRepository<User, UUID> {
-	User findByUsernameOrEmail(String username, String email);	
+	User findByUsernameOrEmail(String username, String email);
+	User findByUsernameOrEmailAndPassword(String username, String email, String password);
+	
 	User save(SaveDTO info);
 
 }
