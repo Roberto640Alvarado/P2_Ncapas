@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.parcial2.models.dtos.PasswordDTO;
 import com.parcial2.models.dtos.SaveDTO;
 import com.parcial2.models.entities.User;
 import com.parcial2.repositories.UserRepository;
@@ -60,6 +61,25 @@ public User findOneById(UUID id) {
 	@Override
 	public List<User> findAll() {
 		return userRepository.findAll();
+	}
+
+	@Override
+	public void changePassword(UUID id, PasswordDTO info)throws Exception {
+		User user = findOneById(id);
+		System.out.println(info.getOldPassword());
+		if(user != null) {
+			//Password exists
+			if(user.getPassword().equals(info.getOldPassword())) {
+				user.setPassword(info.getNewPassword());
+				userRepository.save(user);
+			}
+			else {
+				throw new Exception("Contraseña es distinta");
+			}
+		}
+		else {
+			throw new Exception("User not found papito");
+		}	
 	}
 
 }

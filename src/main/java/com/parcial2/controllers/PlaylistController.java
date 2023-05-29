@@ -26,6 +26,8 @@ import com.parcial2.services.PlaylistService;
 import com.parcial2.services.UserService;
 import com.parcial2.utils.RequestErrorHandler;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/playlist")
 public class PlaylistController {
@@ -39,7 +41,7 @@ public class PlaylistController {
     private RequestErrorHandler errorHandler;
     
     @PostMapping("/save")
-    public ResponseEntity<?> savePlaylist(@RequestBody SavePlaylistDTO info, BindingResult validations) {
+    public ResponseEntity<?> savePlaylist(@RequestBody @Valid SavePlaylistDTO info, BindingResult validations) {
         if (validations.hasErrors()) {
             return new ResponseEntity<>(
                     errorHandler.mapErrors(validations.getFieldErrors()),
