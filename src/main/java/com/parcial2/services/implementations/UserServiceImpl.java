@@ -47,19 +47,25 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-public User findOneById(UUID id) {
-    try {
-        return userRepository.findById(id)
+	public User findOneById(UUID id) {
+    	try {
+        	return userRepository.findById(id)
                 .orElse(null);
-    } catch (Exception e) {
+    		} catch (Exception e) {
         return null;
-    }
-}
+    		}
+	}
 
 
 	@Override
 	public List<User> findAll() {
 		return userRepository.findAll();
 	}
+
+	@Override
+	public User findByUsernameOrEmailAndPassword(String username, String email, String password) {
+    return userRepository.findByUsernameOrEmailAndPassword(username, email, password);
+	}	
+
 
 }
