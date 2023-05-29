@@ -2,6 +2,7 @@ package com.parcial2.services.implementations;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.UUID;
 
 import org.postgresql.util.PGInterval;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,13 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Override
-	public Song findOneById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Song findOneById(UUID id) {
+		try {
+			return songRepository.findById(id)
+					.orElse(null);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
