@@ -5,9 +5,10 @@ import java.util.UUID;
 
 import com.parcial2.models.dtos.SavePlaylistDTO;
 import com.parcial2.models.entities.Playlist;
+import com.parcial2.models.entities.User;
 
 public interface PlaylistService {
-    void save(SavePlaylistDTO dto) throws Exception;
+    void save(SavePlaylistDTO info, User user) throws Exception;
     void deleteById(String id) throws Exception;
     Playlist findOneById(UUID id);
     List<Playlist> findAll();

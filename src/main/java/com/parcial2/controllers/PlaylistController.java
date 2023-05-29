@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.parcial2.models.dtos.MessageDTO;
 import com.parcial2.models.dtos.SavePlaylistDTO;
 import com.parcial2.models.entities.Playlist;
+import com.parcial2.models.entities.User;
 import com.parcial2.services.PlaylistService;
 import com.parcial2.services.UserService;
 import com.parcial2.utils.RequestErrorHandler;
@@ -35,46 +36,41 @@ public class PlaylistController {
     private RequestErrorHandler errorHandler;
     
     @PostMapping("/save")
-public ResponseEntity<?> savePlaylist(@RequestBody SavePlaylistDTO dto, BindingResult validations) {
-    if (validations.hasErrors()) {
-        return new ResponseEntity<>(
-                errorHandler.mapErrors(validations.getFieldErrors()),
-                HttpStatus.BAD_REQUEST);
-    }
-    
-    try {
-        // Verificar si el userCode es nulo o vacío
-        String userCodeString = dto.getUser_code();
-        if (userCodeString == null || userCodeString.isEmpty()) {
+    public ResponseEntity<?> savePlaylist(@RequestBody SavePlaylistDTO info, BindingResult validations) {
+        if (validations.hasErrors()) {
             return new ResponseEntity<>(
-                    new MessageDTO("User code is required"),
+                    errorHandler.mapErrors(validations.getFieldErrors()),
                     HttpStatus.BAD_REQUEST);
         }
         
-        // Verificar si el usuario existe
-        UUID userCode = UUID.fromString(userCodeString);
-        if (userService.findOneById(userCode) == null) {
+        try {
+            UUID userCode = UUID.fromString(info.getUser_code());
+            User user = userService.findOneById(userCode);
+            
+            if (user == null) {
+                return new ResponseEntity<>(
+                        new MessageDTO("User not found"),
+                        HttpStatus.NOT_FOUND);
+            }
+            
+            playlistService.save(info, user);
             return new ResponseEntity<>(
-                    new MessageDTO("User not found"),
-                    HttpStatus.NOT_FOUND);
+                    new MessageDTO("Playlist created"),
+                    HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(
+                    new MessageDTO("Invalid user code format"),
+                    HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(
+                    new MessageDTO("Internal Server Error"),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
-        // Guardar la playlist
-        playlistService.save(dto);
-        return new ResponseEntity<>(
-                new MessageDTO("Playlist created"),
-                HttpStatus.CREATED);
-    } catch (IllegalArgumentException e) {
-        return new ResponseEntity<>(
-                new MessageDTO("Invalid user code format"),
-                HttpStatus.BAD_REQUEST);
-    } catch (Exception e) {
-        e.printStackTrace();
-        return new ResponseEntity<>(
-                new MessageDTO("Internal Server Error"),
-                HttpStatus.INTERNAL_SERVER_ERROR);
     }
-}
+
+    
+
 
     
     @GetMapping("/{id}")

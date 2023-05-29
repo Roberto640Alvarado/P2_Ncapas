@@ -32,12 +32,14 @@ public class Playlist {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_code", nullable = true)
-    private User user_code;
+    private User user;
 
-    public Playlist(String title, String description, User user_code) {
+
+
+    public Playlist(String title, String description, User user) {
         super();
         this.title = title;
         this.description = description;
-        this.user_code = user_code;
+        this.user = user;
     }
 }

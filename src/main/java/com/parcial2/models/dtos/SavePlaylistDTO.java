@@ -11,14 +11,7 @@ public class SavePlaylistDTO {
     @NotEmpty(message = "Description is required")
     private String description;
     
+    @NotEmpty(message = "User Code is required")
     private String user_code;
-
-    public String getUser_code() {
-        return user_code;
-    }
-
-    public void setUser_code(String user_code) {
-        this.user_code = user_code;
-    }
 }
 
