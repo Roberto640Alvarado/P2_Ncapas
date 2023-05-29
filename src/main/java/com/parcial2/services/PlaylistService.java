@@ -12,5 +12,6 @@ public interface PlaylistService {
     void deleteById(String id) throws Exception;
     Playlist findOneById(UUID id);
     List<Playlist> findAll();
-	
+    void updatePlaylist(UUID playlistCode, String newTitle, String newDescription) throws Exception;
 }
+

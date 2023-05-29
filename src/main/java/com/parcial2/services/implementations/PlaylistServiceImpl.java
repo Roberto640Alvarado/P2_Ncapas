@@ -1,6 +1,7 @@
 package com.parcial2.services.implementations;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,4 +70,19 @@ public class PlaylistServiceImpl implements PlaylistService {
     public List<Playlist> findAll() {
         return playlistRepository.findAll();
     }
+
+    @Override
+    public void updatePlaylist(UUID playlistCode, String newTitle, String newDescription) throws Exception {
+        Optional<Playlist> playlistOptional = playlistRepository.findById(playlistCode);
+        if (playlistOptional.isPresent()) {
+            Playlist playlist = playlistOptional.get();
+            playlist.setTitle(newTitle);
+            playlist.setDescription(newDescription);
+            playlistRepository.save(playlist);
+        } else {
+            throw new Exception("Playlist not found");
+        }
+    }
+	
+
 }
