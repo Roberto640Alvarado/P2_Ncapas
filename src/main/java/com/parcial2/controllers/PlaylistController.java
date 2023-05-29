@@ -9,14 +9,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.parcial2.models.dtos.MessageDTO;
 import com.parcial2.models.dtos.SavePlaylistDTO;
+import com.parcial2.models.dtos.UpdatePlaylistDTO;
 import com.parcial2.models.entities.Playlist;
 import com.parcial2.models.entities.User;
 import com.parcial2.services.PlaylistService;
@@ -66,6 +69,17 @@ public class PlaylistController {
             return new ResponseEntity<>(
                     new MessageDTO("Internal Server Error"),
                     HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<?> updatePlaylist(@PathVariable(name = "id") UUID playlistCode, @RequestBody UpdatePlaylistDTO dto) {
+        try {
+            playlistService.updatePlaylist(playlistCode, dto.getTitle(), dto.getDescription());
+            return new ResponseEntity<>(new MessageDTO("Playlist updated"), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(new MessageDTO("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
