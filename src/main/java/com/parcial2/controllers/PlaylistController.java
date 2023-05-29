@@ -107,7 +107,7 @@ public class PlaylistController {
         }
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deletePlaylistById(@PathVariable(name = "id") UUID id) {
 	    try {
 	        playlistService.deleteById(id.toString());
