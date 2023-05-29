@@ -14,4 +14,5 @@ public interface SongService {
 	void deleteById(String id) throws Exception;
 	Song findOneById(UUID id); //Cuando queremos encontrar uno por id el tipo de función debe de ser del mismo tipo de lo que queremos buscar
 	List<Song> findAll();
+	void update(UUID id, SaveSongDTO updatedSong) throws Exception;
 }

@@ -62,5 +62,20 @@ public class SongServiceImpl implements SongService {
 		// TODO Auto-generated method stub
 		return songRepository.findAll();
 	}
+
+	@Override
+	public void update(UUID id, SaveSongDTO updatedSong) throws Exception {
+		// TODO Auto-generated method stub
+		Song song = findOneById(id);
+		
+		if(song == null) {
+			 // Si el ID no es válido
+	        throw new Exception("Song doesnt exist");
+		}
+		song.setTitle(updatedSong.getTitle());
+		song.setDuration(updatedSong.getDuration());
+		
+		songRepository.save(song);
+	}
 	
 }
