@@ -108,7 +108,7 @@ public class SongController {
 		
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteSongById(@PathVariable(name = "id") UUID id) {
 	    try {
 	        songService.deleteById(id.toString());

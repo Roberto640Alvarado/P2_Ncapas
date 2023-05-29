@@ -63,7 +63,7 @@ public ResponseEntity<?> getUserById(@PathVariable(name = "id") UUID id) {
     return new ResponseEntity<>(user, HttpStatus.OK);
 }
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteUserById(@PathVariable(name = "id") UUID id) {
 	    try {
 	        userService.deleteById(id.toString());
