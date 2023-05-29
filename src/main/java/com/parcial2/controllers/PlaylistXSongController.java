@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -117,5 +118,20 @@ public class PlaylistXSongController {
 	                    HttpStatus.BAD_REQUEST);
 		}
 		
+	}
+	//Se busca eliminar la la canción añadida a la playlist
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<?> deleteSongFromPlaylist(@PathVariable(name = "id") UUID id){
+		try {
+	        playlistXSongService.delete(id.toString());
+	        return new ResponseEntity<>(
+	                new MessageDTO("Song deleted from playlist "),
+	                HttpStatus.OK);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return new ResponseEntity<>(
+	                new MessageDTO("Internal Server Error"),
+	                HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
 	}
 }
