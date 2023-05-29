@@ -25,6 +25,8 @@ import com.parcial2.models.entities.User;
 import com.parcial2.services.SongService;
 import com.parcial2.utils.RequestErrorHandler;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/song")
 public class SongController {
@@ -35,7 +37,7 @@ public class SongController {
 	private RequestErrorHandler errorHandler;
 	
 	@PostMapping("/save")
-	public ResponseEntity<?>saveSong(@RequestBody SaveSongDTO info, BindingResult validations){
+	public ResponseEntity<?>saveSong(@RequestBody @Valid SaveSongDTO info, BindingResult validations){
 		
 		if(validations.hasErrors()) {
 			System.out.println(info);
