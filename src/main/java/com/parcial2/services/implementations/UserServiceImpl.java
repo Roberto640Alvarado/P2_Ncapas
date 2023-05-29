@@ -32,9 +32,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(rollbackOn = Exception.class)
 	public void deleteById(String id) throws Exception {
-		// TODO Auto-generated method stub
-		
+	    try {
+	        UUID userId = UUID.fromString(id);
+	        userRepository.deleteById(userId);
+	    } catch (IllegalArgumentException e) {
+	        // Si el ID no es válido
+	        throw new Exception("Invalid song ID");
+	    } catch (Exception e) {
+	        // Manejar otras excepciones
+	        throw new Exception("Failed to delete user");
+	    }
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.parcial2.services.implementations;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.UUID;
 
 import org.postgresql.util.PGInterval;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +33,28 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Override
+	@Transactional(rollbackOn = Exception.class)
 	public void deleteById(String id) throws Exception {
-		// TODO Auto-generated method stub
-		
+	    try {
+	        UUID songId = UUID.fromString(id);
+	        songRepository.deleteById(songId);
+	    } catch (IllegalArgumentException e) {
+	        // Si el ID no es válido
+	        throw new Exception("Invalid song ID");
+	    } catch (Exception e) {
+	        // Manejar otras excepciones
+	        throw new Exception("Failed to delete song");
+	    }
 	}
 
 	@Override
-	public Song findOneById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Song findOneById(UUID id) {
+		try {
+			return songRepository.findById(id)
+					.orElse(null);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override

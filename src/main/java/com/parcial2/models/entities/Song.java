@@ -28,7 +28,7 @@ public class Song {
 	@Id
 	@Column(name = "code")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@JsonIgnore
+	//@JsonIgnore
 	private UUID code;
 	
 	@Column(name = "title")
